@@ -15,8 +15,4 @@ public class Point {
         return "("+ x + ", "+ y + ")";
     }
 
-    public void add(Point other){
-        this.x += other.x;
-        this.y += other.y;
-    }
 }

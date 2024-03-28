@@ -13,13 +13,18 @@ import com.codiceplastico.mars.model.Point;
 import com.codiceplastico.mars.model.Rover;
 import com.codiceplastico.mars.util.Utils;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class MarsService {
 
-    public final static int MAX_X = 10;
-    public final static int MAX_Y = 4;
-    public final static Set<Point> obstacles = new HashSet<>(Arrays.asList(Point.builder().x(5).y(2).build()));
+    public final static int MAX_X = 3;
+    public final static int MAX_Y = 5;
+    public final static Set<Point> obstacles = new HashSet<>(Arrays.asList(Point.builder().x(1).y(2).build()));
 
+    @Getter
     private Rover rover;
 
     public void initialize(Point roverStartingPoint, Direction roverDirection) {
@@ -45,7 +50,7 @@ public class MarsService {
         if (obstacles.contains(newPosition)) {
             throw new ObstacleCollisionException(newPosition);
         }
-        rover.setPosition(newPosition);
+        this.rover.setPosition(newPosition);
 
         return newPosition;
     }

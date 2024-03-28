@@ -37,7 +37,7 @@ public class MarsController {
                     .toList();
             return "Moved at these points " + movePointsList;
         } catch (ObstacleCollisionException ex) {
-            return "Obstacle encountered at " + ex.getObstaclePosition();
+            return "Aborting! Obstacle encountered at " + ex.getObstaclePosition() + " . The rover is at " + marsService.getRover().getPosition();
         }
     }
 
