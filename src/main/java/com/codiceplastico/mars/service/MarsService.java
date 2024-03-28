@@ -2,6 +2,7 @@ package com.codiceplastico.mars.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -39,6 +40,9 @@ public class MarsService {
     }
 
     public Point move(Command command) {
+        if(Objects.isNull(rover)){
+            throw new RuntimeException("You need to initialize the rover first");
+        }
         Point moveDelta = switch (command) {
             case f -> rover.getDeltaForward();
             case b -> rover.getDeltaBackword();
