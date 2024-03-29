@@ -1,5 +1,6 @@
 package com.codiceplastico.mars.controller;
 
+import com.codiceplastico.mars.model.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,21 +24,21 @@ public class MarsController {
     private MarsService marsService;
 
     @PostMapping("/initialize")
-    public String initialize(@RequestBody InitializationDTO body) {
+    public ApiResponse initialize(@RequestBody InitializationDTO body) {
         marsService.initialize(body.getStartingPoint(), body.getDirection());
-        return "Successfully initialized the rover at " + body.getStartingPoint() + " with direction "
-                + body.getDirection();
+        return new ApiResponse("Successfully initialized the rover at " + body.getStartingPoint() + " with direction "
+                + body.getDirection());
     }
 
     @PostMapping("/move")
-    public String move(@RequestBody MoveDTO body) {
+    public ApiResponse move(@RequestBody MoveDTO body) {
         try {
             var movePointsList = body.getCommands().stream()
                     .map(command -> marsService.move(command))
                     .toList();
-            return "Moved at these points " + movePointsList;
+            return new ApiResponse("Moved at these points " + movePointsList);
         } catch (ObstacleCollisionException ex) {
-            return "Aborting! Obstacle encountered at " + ex.getObstaclePosition() + " . The rover is at " + marsService.getRover().getPosition();
+            return new ApiResponse("Aborting! Obstacle encountered at " + ex.getObstaclePosition() + " . The rover is at " + marsService.getRover().getPosition());
         }
     }
 
